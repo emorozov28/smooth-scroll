@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lazy-load-youtube</title>
+    <title>smooth-scroll</title>
     <meta name="title" content="YouTube Iframe" />
     <meta name="description" content="lazy-load-youtube - a library for lazy load of youtube videos on your page">
     <meta name="keywords" content="YouTube Iframe, lazy-load, youtube, iframe, video, video-load, video-lazy" />
@@ -31,6 +31,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: rgba(255,255,255, .4);
         }
         .link {
             margin-right: 20px;
@@ -58,7 +59,7 @@
 </head>
 
 <body>
-    <div class="fix">
+    <div class="fix js-fix">
         <a href="#s1" class="link js-link">block 1</a>
         <a href="#s2" class="link js-link">block 2</a>
         <a href="#s3" class="link js-link">block 3</a>

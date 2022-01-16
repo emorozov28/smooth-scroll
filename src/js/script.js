@@ -1,67 +1,67 @@
-(() => {
+const smoothScroll = (speed) => {
 
     const selector = document.querySelectorAll('.js-link');
-    let timer;
 
     selector.forEach(item => {
-        item.addEventListener('click', searchHref);
+        item.addEventListener('click', innerSmoothScroll);
     });
 
-    function searchHref(e) {
+    function innerSmoothScroll(e) {
         e.preventDefault();
-        const href = this.hasAttribute('href') ? this.getAttribute('href') : null;
+        if (!this.hasAttribute('href')) return;
+
+        const fixElem = document.querySelector('.js-fix').offsetHeight;
+        const href = this.getAttribute('href');
         const block = searchBlock(href);
         const coordBlock = getCoords(block);
         let positionUser = window.scrollY;
-        // console.log(positionUser);
 
-        // window.scrollTo(positionUser, coordBlock);
         const pos = userPosition(positionUser, coordBlock);
-        // console.log(pos);
 
-        // return;
+        console.clear()
+        console.log('user', positionUser);
+        console.log('block', coordBlock);
+        const distance = Math.abs(coordBlock - positionUser) / 100 * (speed / 100);
+        console.log('distance', distance);
+
+
+        window.scrollTo(0, positionUser);
+
         if (pos === 'below') {
-            const scrollBottomElem = setInterval(() => {
-                window.scrollTo(0, positionUser);
-                positionUser += 80;
-
-                if (positionUser >= coordBlock) {
+            const scrollBottomElem = () => {
+                if (positionUser >= (coordBlock - fixElem)) {
+                    clearTimeout(timer);
                     window.scrollTo(0, coordBlock);
-                    clearInterval(scrollBottomElem);
+                    window.scrollTo(0, coordBlock - fixElem);
+                    return;
                 }
-                return;
-            }, 20);
+
+                positionUser += distance;
+                window.scrollTo(0, positionUser);
+                window.scrollTo(0, positionUser);
+
+                timer = setTimeout(scrollBottomElem, 20);
+            }
+            scrollBottomElem();
         }
 
         if (pos === 'above') {
-
-            function scrollToTop() {
-                if (positionUser <= coordBlock) {
+            const scrollTopElem = () => {
+                if (positionUser <= (coordBlock - fixElem)) {
                     clearTimeout(timer);
-                    window.scrollTo(0, coordBlock);
+                    window.scrollTo(0, coordBlock - fixElem);
                     return;
                 }
-                if (positionUser > 0) {
-                    window.scrollTo(0, positionUser);
-                    positionUser = positionUser - 100; //100 - скорость прокрутки
-                    timer = setTimeout(scrollToTop, 20);
-                }
-                else {
-                    clearTimeout(timer);
-                    window.scrollTo(0, coordBlock);
-                }
+
+                positionUser -= distance;
+                window.scrollTo(0, positionUser);
+                window.scrollTo(0, positionUser);
+
+                timer = setTimeout(scrollTopElem, 20);
             }
-
-            // window.scrollTo(0, coordBlock);
-            // positionUser = positionUser - 100;
-            // // setTimeout(scrollTopElem, coordBlock);
-
-            // if (positionUser < coordBlock) {
-            //     clearInterval(scrollTopElem);
-            //     window.scrollTo(0, coordBlock);
-            // }
-            scrollToTop()
+            scrollTopElem()
         }
+
     }
 
     function searchBlock(selector) {
@@ -92,4 +92,7 @@
         return position;
     }
 
-})();
+
+};
+
+smoothScroll(300);
