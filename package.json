@@ -1,7 +1,7 @@
 {
-  "name": "gulp-plugin",
+  "name": "smooth-page-scroll",
   "version": "1.0.0",
-  "description": ";azy-load-youtube",
+  "description": "smooth-page-scroll - a small library for smooth scrolling",
   "main": "index.js",
   "type": "module",
   "scripts": {

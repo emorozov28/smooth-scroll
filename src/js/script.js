@@ -1,67 +1,48 @@
-const smoothScroll = (speed) => {
+const smoothScroll = function (selector, speed = 300) {
 
-    const selector = document.querySelectorAll('.js-link');
+    const anchorLink = [...document.querySelectorAll('a[href*="#"]')];
+    const anchorSelector= [...document.querySelectorAll('.js-scroll-link')];
 
-    selector.forEach(item => {
+    if(!anchorLink && !anchorSelector) return;
+
+    anchorLink.forEach(item => {
+        item.addEventListener('click', innerSmoothScroll);
+    });
+    anchorSelector.forEach(item => {
         item.addEventListener('click', innerSmoothScroll);
     });
 
     function innerSmoothScroll(e) {
         e.preventDefault();
-        if (!this.hasAttribute('href')) return;
+        if (!this.hasAttribute('href') && !this.hasAttribute('data-scroll-href')) return;
 
-        const fixElem = document.querySelector('.js-fix').offsetHeight;
-        const href = this.getAttribute('href');
+        const fixElem = document.querySelector(selector) ? document.querySelector(selector).offsetHeight : '';
+        const href = this.getAttribute('href') || this.getAttribute('data-scroll-href');
         const block = searchBlock(href);
         const coordBlock = getCoords(block);
-        let positionUser = window.scrollY;
+        let positionUser = parseInt(window.pageYOffset);
+        const distance = Math.round(Math.abs(coordBlock - positionUser) / 100 * (speed / 100));
 
-        const pos = userPosition(positionUser, coordBlock);
-
-        console.clear()
-        console.log('user', positionUser);
-        console.log('block', coordBlock);
-        const distance = Math.abs(coordBlock - positionUser) / 100 * (speed / 100);
-        console.log('distance', distance);
-
-
-        window.scrollTo(0, positionUser);
-
-        if (pos === 'below') {
-            const scrollBottomElem = () => {
-                if (positionUser >= (coordBlock - fixElem)) {
-                    clearTimeout(timer);
-                    window.scrollTo(0, coordBlock);
-                    window.scrollTo(0, coordBlock - fixElem);
-                    return;
-                }
-
-                positionUser += distance;
-                window.scrollTo(0, positionUser);
-                window.scrollTo(0, positionUser);
-
-                timer = setTimeout(scrollBottomElem, 20);
-            }
-            scrollBottomElem();
+        if(positionUser === (coordBlock - fixElem)) return;
+        else if (positionUser <= (coordBlock - fixElem)) {
+            window.scrollTo(0, positionUser);
+            const scrollDown = setInterval(function () {
+                positionUser > (coordBlock - fixElem) 
+                    ? positionUser += 1 
+                    : positionUser += distance
+                window.scroll(0, positionUser - fixElem);
+                if (positionUser >= coordBlock) clearInterval(scrollDown);
+            }, 20);
+        } else {
+            window.scrollTo(0, positionUser);
+            const scrollUp = setInterval(function () {
+                positionUser < (coordBlock + fixElem) 
+                    ? positionUser -= 1
+                    : positionUser -= distance;
+                window.scroll(0, positionUser - fixElem);
+                if (positionUser <= coordBlock) clearInterval(scrollUp);
+            }, 20);
         }
-
-        if (pos === 'above') {
-            const scrollTopElem = () => {
-                if (positionUser <= (coordBlock - fixElem)) {
-                    clearTimeout(timer);
-                    window.scrollTo(0, coordBlock - fixElem);
-                    return;
-                }
-
-                positionUser -= distance;
-                window.scrollTo(0, positionUser);
-                window.scrollTo(0, positionUser);
-
-                timer = setTimeout(scrollTopElem, 20);
-            }
-            scrollTopElem()
-        }
-
     }
 
     function searchBlock(selector) {
@@ -79,20 +60,6 @@ const smoothScroll = (speed) => {
         return top;
     }
 
-    function userPosition(user, block) {
-        let position;
-        if (user < block) {
-            position = 'below'
-        } else if (user > block) {
-            position = 'above'
-        } else {
-            position = 'in'
-        }
-
-        return position;
-    }
-
-
 };
 
-smoothScroll(300);
+// smoothScroll('.js-fix', 300);
