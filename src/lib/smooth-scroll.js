@@ -20,15 +20,16 @@ export class SmoothScroll {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const linkHref = link.getAttribute('href') || link.getAttribute('data-scroll-href');
-                const blockPosition = this.searchBlock(linkHref);
+                const blockPosition = linkHref ? document.querySelector(linkHref) : null;
+                if(!blockPosition) throw Error(`The section "${linkHref}" not found on the page`);
                 const blockCoord = this.getCoords(blockPosition);
-                this.scrollTo(blockCoord, this.options.speed)
+                this.scrollToSection(blockCoord, this.options.speed)
             });
         });
 
     }
 
-    scrollTo(positionBlock, duration) {
+    scrollToSection(positionBlock, duration) {
         const durationAnimation = typeof duration === 'number' 
             ? duration 
             : duration.replace(/[^0-9]/g,"");
@@ -55,11 +56,6 @@ export class SmoothScroll {
         }, 1000 / 60);
     }
 
-    searchBlock(selector) {
-        if (!selector) return;
-        return document.querySelector(selector) ? document.querySelector(selector) : null;
-    }
-
     getCoords(selector) {
         const box = selector.getBoundingClientRect();
         const body = document.body;
@@ -71,3 +67,5 @@ export class SmoothScroll {
     }
 
 }
+
+console.log(111);
