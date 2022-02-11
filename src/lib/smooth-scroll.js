@@ -29,11 +29,12 @@ export class SmoothScroll {
     }
 
     scrollTo(positionBlock, duration) {
-        let durationAnimation;
-        typeof duration === 'number' 
-            ? durationAnimation = duration 
-            : durationAnimation = duration.replace(/[^0-9]/g,"");
-        const fixBlockHeight = document.querySelector(this.selector) ? document.querySelector(this.selector).offsetHeight : null;
+        const durationAnimation = typeof duration === 'number' 
+            ? duration 
+            : duration.replace(/[^0-9]/g,"");
+        const fixBlockHeight = typeof this.selector === 'string' 
+            ? document.querySelector(this.selector).offsetHeight 
+            : null;
         const windowPosition = window.scrollY || window.pageYOffset;
         const distance = positionBlock - windowPosition - fixBlockHeight;
         const startTime = new Date().getTime();
@@ -42,14 +43,15 @@ export class SmoothScroll {
           if ((time /= durationAnimation / 2) < 1) return distance / 2 * time * time * time * time + from;
           return -distance / 2 * ((time -= 2) * time * time * time - 2) + from;
         };
-      
+        
+        if(Math.ceil(positionBlock) === Math.ceil(window.pageYOffset + fixBlockHeight)) return;
         const scrollAnchor = setInterval(() => {
           const time = new Date().getTime() - startTime;
           const posBlock = timeAnimation(time, windowPosition, distance, durationAnimation);
           if (time >= durationAnimation) {
             clearInterval(scrollAnchor);
           }
-          window.scroll(0, posBlock);
+          window.scroll(0, Math.ceil(posBlock));
         }, 1000 / 60);
     }
 
