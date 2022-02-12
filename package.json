@@ -1,7 +1,7 @@
 {
-  "name": "smooth-scroll-js",
+  "name": "smooth-scroll-by",
   "version": "1.0.0",
-  "description": "smooth-scroll-js - a library for smooth scrolling of the page to the anchor",
+  "description": "smooth-scroll-by - a library for smooth scrolling of the page to the anchor",
   "main": "./dist/index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack --mode development",
@@ -33,7 +33,6 @@
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
-    "autoprefixer": "^10.4.2",
     "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.3",
