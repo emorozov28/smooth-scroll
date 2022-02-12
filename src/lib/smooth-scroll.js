@@ -67,5 +67,3 @@ export class SmoothScroll {
     }
 
 }
-
-console.log(111);
