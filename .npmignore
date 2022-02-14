@@ -4,6 +4,5 @@ src/
 .babelrc
 package.json
 package-lock.json
-postcss.config.js
 webpack.config.js
 .DS_Store
