@@ -8,7 +8,7 @@ export class SmoothScroll {
         this.selector = selector;
         this.options = { ...defaultOptions, ...options };
         this.anchorLink = [...document.querySelectorAll('a[href*="#"]')];
-        this.anchorSelector = [...document.querySelectorAll('.js-scroll-link')];
+        this.anchorSelector = [...document.querySelectorAll('[data-scroll-href*="#"]')];
 
         this.init();
     }
@@ -33,9 +33,10 @@ export class SmoothScroll {
         const durationAnimation = typeof duration === 'number' 
             ? duration 
             : duration.replace(/[^0-9]/g,"");
-        const fixBlockHeight = typeof this.selector === 'string' 
-            ? document.querySelector(this.selector).offsetHeight 
+        const fixBlockHeight = (typeof this.selector === 'string' && document.querySelector(this.selector) )
+            ? document.querySelector(this.selector).offsetHeight
             : null;
+
         const windowPosition = window.scrollY || window.pageYOffset;
         const distance = positionBlock - windowPosition - fixBlockHeight;
         const startTime = new Date().getTime();

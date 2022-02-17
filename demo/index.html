@@ -58,46 +58,46 @@
             justify-content: center;
         }
 
-        #s1 {
+        #section1 {
             background-color: cornflowerblue;
         }
 
-        #s2 {
+        #section2 {
             background-color: brown;
         }
 
-        #s3 {
+        #section3 {
             background-color: aqua;
         }
 
-        #s4 {
+        #section4 {
             background-color: darkgoldenrod;
         }
 
-        #s5 {
+        #section5 {
             background-color: darkgreen;
         }
     </style>
 <script defer src="index.js"></script></head>
 
 <body>
-    <div class="fix js-fix">
-        <a href="#s1" class="link">block 1</a>
-        <a href="#s2" class="link">block 2</a>
-        <a href="#s3" class="link">block 3</a>
-        <button data-scroll-href="#s4" class="link js-scroll-link">block 4</button>
-        <button data-scroll-href="#s5" class="link js-scroll-link">block 5</button>
-    </div>
+    <header class="fix js-fix-header">
+        <a href="#section1" class="link">block 1</a>
+        <a href="#section2" class="link">block 2</a>
+        <a href="#section3" class="link">block 3</a>
+        <button data-scroll-href="#section4" class="link">block 4</button>
+        <button data-scroll-href="#section5" class="link">block 5</button>
+    </header>
     
-    <section id="s1">1</section>
-    <section id="s2">2</section>
-    <section id="s3">3</section>
-    <section id="s4">4</section>
-    <section id="s5">5</section>
+    <section id="section1">1</section>
+    <section id="section2">2</section>
+    <section id="section3">3</section>
+    <section id="section4">4</section>
+    <section id="section5">5</section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function(){
-            new SmoothScroll('.js-fix', {
+            new SmoothScroll('.js-fix-header', {
                 speed: 1000
             });
         });

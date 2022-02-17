@@ -1,6 +1,6 @@
 {
   "name": "smooth-scroll-by",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "smooth-scroll-by - a library for smooth scrolling of the page to the anchor",
   "main": "./dist/index.js",
   "scripts": {

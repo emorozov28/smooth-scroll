@@ -14,9 +14,9 @@ Better support in modern browsers
 ## Working with the library
 ```html
 # link
-<a href="#section1" class="link">block 1</a>
+<a href="#section1">block 1</a>
 # or
-<button data-scroll-href="#section2" class="link js-scroll-link">block 2</button>
+<button data-scroll-href="#section2">block 2</button>
 # You can use both options
 
 # Blocks should have id
@@ -35,7 +35,7 @@ new SmoothScroll();
 #### CDN
 JS
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/smooth-scroll-by@1.0.2/dist/index.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/smooth-scroll-by@1.1.0/dist/index.js"></script>
 ```
 HTML
 ```html
